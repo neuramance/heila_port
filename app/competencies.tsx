@@ -239,8 +239,8 @@ export default function Competencies() {
   return (
     <div {...stylex.props(styles.container)}>
       <p {...stylex.props(styles.bioStatement)}>
-        Software engineer architecting autonomous AI voice agents, real-time engines, and
-        distributed platforms with mathematical rigor.
+        Software engineer building autonomous AI voice agents, real-time systems, and modern
+        full-stack applications — MS in Software Engineering at UT Austin.
       </p>
 
       <div
