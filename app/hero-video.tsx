@@ -61,11 +61,7 @@ const styles = stylex.create({
     zIndex: 30,
     display: 'flex',
     alignItems: 'center',
-    gap: {
-      default: '0.4rem',
-      '@media (max-width: 480px)': '0.25rem',
-      '@media (max-width: 360px)': '0.15rem',
-    },
+    justifyContent: 'center',
     paddingTop: {
       default: '0.35rem',
       '@media (max-width: 480px)': '0.22rem',
@@ -75,14 +71,12 @@ const styles = stylex.create({
       '@media (max-width: 480px)': '0.22rem',
     },
     paddingLeft: {
-      default: '0.55rem',
-      '@media (max-width: 480px)': '0.4rem',
-      '@media (max-width: 360px)': '0.3rem',
+      default: '0.35rem',
+      '@media (max-width: 480px)': '0.22rem',
     },
     paddingRight: {
-      default: '0.55rem',
-      '@media (max-width: 480px)': '0.4rem',
-      '@media (max-width: 360px)': '0.3rem',
+      default: '0.35rem',
+      '@media (max-width: 480px)': '0.22rem',
     },
     backgroundColor: tokens.colorGlassBg,
     backdropFilter: 'blur(16px)',
@@ -128,7 +122,6 @@ const styles = stylex.create({
 
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
@@ -139,16 +132,12 @@ export default function HeroVideo() {
     video
       .play()
       .then(() => {
-        setIsPlaying(true);
         setIsMuted(false);
       })
       .catch(() => {
         video.muted = true;
         setIsMuted(true);
-        video
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch(() => setIsPlaying(false));
+        video.play().catch(() => {});
 
         const enableAudioOnInteraction = () => {
           if (video.muted) {
@@ -160,22 +149,27 @@ export default function HeroVideo() {
         window.addEventListener('pointerdown', enableAudioOnInteraction, { once: true });
         window.addEventListener('keydown', enableAudioOnInteraction, { once: true });
       });
+
+    const ensurePlaying = () => {
+      if (video && video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        ensurePlaying();
+      }
+    };
+
+    window.addEventListener('focus', ensurePlaying);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', ensurePlaying);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
-
-  const togglePlayback = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (isPlaying) {
-      video.pause();
-      setIsPlaying(false);
-    } else {
-      video
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false));
-    }
-  };
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -184,6 +178,19 @@ export default function HeroVideo() {
     const nextMuted = !isMuted;
     video.muted = nextMuted;
     setIsMuted(nextMuted);
+  };
+
+  const handleEnded = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = 0;
+    video.play().catch(() => {});
+  };
+
+  const handlePause = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.play().catch(() => {});
   };
 
   return (
@@ -196,34 +203,15 @@ export default function HeroVideo() {
           loop
           playsInline
           preload="auto"
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
+          onEnded={handleEnded}
+          onPause={handlePause}
           {...stylex.props(styles.video)}
         />
         <div {...stylex.props(styles.vignette)} />
         <div {...stylex.props(styles.gradientOverlay)} />
       </div>
 
-      <div {...stylex.props(styles.controlsContainer)} role="region" aria-label="Video Controls">
-        <button
-          type="button"
-          onClick={togglePlayback}
-          {...stylex.props(styles.controlButton)}
-          aria-label={isPlaying ? 'Pause background video' : 'Play background video'}
-          title={isPlaying ? 'Pause' : 'Play'}
-        >
-          {isPlaying ? (
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="5" y="4" width="4" height="16" rx="1" />
-              <rect x="15" y="4" width="4" height="16" rx="1" />
-            </svg>
-          ) : (
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="6 4 20 12 6 20 6 4" />
-            </svg>
-          )}
-        </button>
-
+      <div {...stylex.props(styles.controlsContainer)} role="region" aria-label="Audio Controls">
         <button
           type="button"
           onClick={toggleMute}

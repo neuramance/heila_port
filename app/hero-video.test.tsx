@@ -14,19 +14,10 @@ describe('HeroVideo Component', () => {
     expect(video).toHaveAttribute('playsinline');
   });
 
-  it('toggles video playback when play/pause button is clicked', async () => {
+  it('does not render a pause button and enforces continuous playback', () => {
     render(<HeroVideo />);
-    const pauseButton = screen.getByRole('button', {
-      name: /pause background video/i,
-    });
-
-    fireEvent.click(pauseButton);
-    expect(screen.getByRole('button', { name: /play background video/i })).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole('button', { name: /play background video/i }));
-    expect(
-      await screen.findByRole('button', { name: /pause background video/i }),
-    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /pause/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /play/i })).not.toBeInTheDocument();
   });
 
   it('toggles video audio when mute button is clicked', async () => {

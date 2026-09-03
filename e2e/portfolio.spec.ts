@@ -47,20 +47,27 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
     expect(fitsWithinViewport).toBe(true);
   });
 
-  test('interacts with background video controls', async ({ page }) => {
-    const pauseButton = page.getByRole('button', {
-      name: /pause background video/i,
-    });
-    await expect(pauseButton).toBeVisible();
-    await pauseButton.click();
+  test('interacts with background video audio controls and ensures continuous playback', async ({
+    page,
+  }) => {
+    await expect(page.getByRole('button', { name: /pause/i })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /play/i })).toHaveCount(0);
 
-    const playButton = page.getByRole('button', {
-      name: /play background video/i,
+    const isVideoPlaying = await page.evaluate(() => {
+      const v = document.querySelector('video');
+      return v ? !v.paused : false;
     });
-    await expect(playButton).toBeVisible();
-    await playButton.click();
+    expect(isVideoPlaying).toBe(true);
 
-    await expect(page.getByRole('button', { name: /pause background video/i })).toBeVisible();
+    const muteButton = page.getByRole('button', { name: /mute video audio/i });
+    await expect(muteButton).toBeVisible();
+    await muteButton.click();
+
+    const unmuteButton = page.getByRole('button', { name: /unmute video audio/i });
+    await expect(unmuteButton).toBeVisible();
+    await unmuteButton.click();
+
+    await expect(page.getByRole('button', { name: /mute video audio/i })).toBeVisible();
   });
 
   test('copies email on contact button click', async ({ page, context }) => {
