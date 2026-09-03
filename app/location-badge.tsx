@@ -34,11 +34,33 @@ const styles = stylex.create({
   badgeButton: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.45rem',
-    paddingTop: '0.35rem',
-    paddingBottom: '0.35rem',
-    paddingLeft: '0.7rem',
-    paddingRight: '0.7rem',
+    gap: {
+      default: '0.45rem',
+      '@media (max-width: 640px)': '0.35rem',
+      '@media (max-width: 380px)': '0.25rem',
+    },
+    paddingTop: {
+      default: '0.35rem',
+      '@media (max-width: 380px)': '0.26rem',
+    },
+    paddingBottom: {
+      default: '0.35rem',
+      '@media (max-width: 380px)': '0.26rem',
+    },
+    paddingLeft: {
+      default: '0.7rem',
+      '@media (max-width: 640px)': '0.55rem',
+      '@media (max-width: 380px)': '0.42rem',
+    },
+    paddingRight: {
+      default: '0.7rem',
+      '@media (max-width: 640px)': '0.55rem',
+      '@media (max-width: 380px)': '0.42rem',
+    },
+    minHeight: {
+      default: 'auto',
+      '@media (max-width: 640px)': 28,
+    },
     borderRadius: 9999,
     backgroundColor: {
       default: tokens.colorGlassBg,
@@ -55,13 +77,20 @@ const styles = stylex.create({
     fontSize: {
       default: '0.72rem',
       '@media (max-width: 640px)': '0.62rem',
+      '@media (max-width: 380px)': '0.54rem',
     },
-    letterSpacing: '0.08em',
+    letterSpacing: {
+      default: '0.08em',
+      '@media (max-width: 380px)': '0.04em',
+    },
     textTransform: 'uppercase',
     color: tokens.colorTextSecondary,
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     userSelect: 'none',
+    whiteSpace: 'nowrap',
+    flexShrink: 0,
+    touchAction: 'manipulation',
   },
   iconWrapper: {
     display: 'inline-flex',

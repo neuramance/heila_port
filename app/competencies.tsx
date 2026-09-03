@@ -53,11 +53,18 @@ const styles = stylex.create({
     marginTop: {
       default: '1.1rem',
       '@media (max-width: 640px)': '0.65rem',
+      '@media (max-width: 380px)': '0.38rem',
     },
-    maxWidth: 720,
+    maxWidth: 880,
     width: '100%',
-    paddingLeft: '0.5rem',
-    paddingRight: '0.5rem',
+    paddingLeft: {
+      default: '0.5rem',
+      '@media (max-width: 640px)': '0rem',
+    },
+    paddingRight: {
+      default: '0.5rem',
+      '@media (max-width: 640px)': '0rem',
+    },
     boxSizing: 'border-box',
   },
   bioStatement: {
@@ -65,50 +72,83 @@ const styles = stylex.create({
     fontSize: {
       default: 'clamp(0.92rem, 1.3vw, 1.06rem)',
       '@media (max-width: 640px)': '0.78rem',
+      '@media (max-width: 380px)': '0.68rem',
     },
     lineHeight: {
       default: 1.55,
       '@media (max-width: 640px)': 1.38,
+      '@media (max-width: 380px)': 1.28,
     },
     color: tokens.colorTextSecondary,
     textAlign: 'center',
+    textWrap: 'balance',
     margin: 0,
     marginBottom: {
       default: '0.9rem',
       '@media (max-width: 640px)': '0.55rem',
+      '@media (max-width: 380px)': '0.36rem',
     },
     maxWidth: 580,
     textShadow: '0 2px 16px rgba(0, 0, 0, 0.9)',
   },
   chipList: {
-    display: 'flex',
+    display: {
+      default: 'flex',
+      '@media (max-width: 640px)': 'grid',
+    },
+    gridTemplateColumns: {
+      default: 'none',
+      '@media (max-width: 640px)': 'repeat(2, minmax(0, 1fr))',
+    },
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     gap: {
       default: '0.5rem',
       '@media (max-width: 640px)': '0.35rem',
+      '@media (max-width: 380px)': '0.24rem',
+    },
+    width: {
+      default: 'auto',
+      '@media (max-width: 640px)': '100%',
+    },
+    maxWidth: {
+      default: 'none',
+      '@media (max-width: 640px)': 440,
     },
   },
   chipButton: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.4rem',
+    justifyContent: 'center',
+    gap: {
+      default: '0.4rem',
+      '@media (max-width: 640px)': '0.28rem',
+      '@media (max-width: 380px)': '0.2rem',
+    },
     paddingTop: {
       default: '0.35rem',
-      '@media (max-width: 640px)': '0.26rem',
+      '@media (max-width: 640px)': '0.3rem',
+      '@media (max-width: 380px)': '0.24rem',
     },
     paddingBottom: {
       default: '0.35rem',
-      '@media (max-width: 640px)': '0.26rem',
+      '@media (max-width: 640px)': '0.3rem',
+      '@media (max-width: 380px)': '0.24rem',
     },
     paddingLeft: {
       default: '0.75rem',
-      '@media (max-width: 640px)': '0.5rem',
+      '@media (max-width: 640px)': '0.45rem',
+      '@media (max-width: 380px)': '0.28rem',
     },
     paddingRight: {
       default: '0.75rem',
-      '@media (max-width: 640px)': '0.5rem',
+      '@media (max-width: 640px)': '0.45rem',
+      '@media (max-width: 380px)': '0.28rem',
+    },
+    minHeight: {
+      default: 'auto',
+      '@media (max-width: 640px)': 32,
     },
     borderRadius: 9999,
     backgroundColor: {
@@ -125,14 +165,27 @@ const styles = stylex.create({
     fontFamily: tokens.fontMono,
     fontSize: {
       default: '0.72rem',
-      '@media (max-width: 640px)': '0.62rem',
+      '@media (max-width: 640px)': '0.58rem',
+      '@media (max-width: 380px)': '0.51rem',
     },
-    letterSpacing: '0.06em',
+    letterSpacing: {
+      default: '0.06em',
+      '@media (max-width: 640px)': '0.03em',
+      '@media (max-width: 380px)': '0.01em',
+    },
     textTransform: 'uppercase',
     color: tokens.colorTextSecondary,
     cursor: 'pointer',
     transition: 'all 0.18s ease',
     userSelect: 'none',
+    whiteSpace: 'nowrap',
+    touchAction: 'manipulation',
+    width: {
+      default: 'auto',
+      '@media (max-width: 640px)': '100%',
+    },
+    minWidth: 0,
+    boxSizing: 'border-box',
   },
   chipButtonActive: {
     backgroundColor: 'rgba(196, 181, 253, 0.16)',
@@ -146,31 +199,42 @@ const styles = stylex.create({
     borderRadius: '50%',
     backgroundColor: tokens.colorAccent,
     opacity: 0.65,
+    flexShrink: 0,
   },
   chipDotActive: {
     opacity: 1,
     boxShadow: '0 0 8px rgba(196, 181, 253, 0.9)',
   },
+  chipLabel: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
   detailCard: {
     marginTop: {
       default: '0.75rem',
       '@media (max-width: 640px)': '0.45rem',
+      '@media (max-width: 380px)': '0.32rem',
     },
     paddingTop: {
       default: '0.6rem',
-      '@media (max-width: 640px)': '0.45rem',
+      '@media (max-width: 640px)': '0.42rem',
+      '@media (max-width: 380px)': '0.3rem',
     },
     paddingBottom: {
       default: '0.6rem',
-      '@media (max-width: 640px)': '0.45rem',
+      '@media (max-width: 640px)': '0.42rem',
+      '@media (max-width: 380px)': '0.3rem',
     },
     paddingLeft: {
       default: '1rem',
       '@media (max-width: 640px)': '0.7rem',
+      '@media (max-width: 380px)': '0.45rem',
     },
     paddingRight: {
       default: '1rem',
       '@media (max-width: 640px)': '0.7rem',
+      '@media (max-width: 380px)': '0.45rem',
     },
     borderRadius: 10,
     backgroundColor: 'rgba(10, 10, 18, 0.82)',
@@ -181,7 +245,11 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '0.4rem',
+    gap: {
+      default: '0.4rem',
+      '@media (max-width: 640px)': '0.3rem',
+      '@media (max-width: 380px)': '0.22rem',
+    },
     maxWidth: 560,
     width: '100%',
     boxSizing: 'border-box',
@@ -194,10 +262,15 @@ const styles = stylex.create({
     fontSize: {
       default: '0.82rem',
       '@media (max-width: 640px)': '0.72rem',
+      '@media (max-width: 380px)': '0.64rem',
     },
-    lineHeight: 1.45,
+    lineHeight: {
+      default: 1.45,
+      '@media (max-width: 380px)': 1.32,
+    },
     color: tokens.colorTextSecondary,
     textAlign: 'center',
+    textWrap: 'balance',
     margin: 0,
   },
   techPills: {
@@ -205,13 +278,17 @@ const styles = stylex.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '0.35rem',
+    gap: {
+      default: '0.35rem',
+      '@media (max-width: 380px)': '0.22rem',
+    },
   },
   techPill: {
     fontFamily: tokens.fontMono,
     fontSize: {
       default: '0.66rem',
       '@media (max-width: 640px)': '0.58rem',
+      '@media (max-width: 380px)': '0.5rem',
     },
     letterSpacing: '0.06em',
     color: tokens.colorAccent,
@@ -220,10 +297,22 @@ const styles = stylex.create({
     borderStyle: 'solid',
     borderColor: 'rgba(196, 181, 253, 0.25)',
     borderRadius: 4,
-    paddingTop: '0.1rem',
-    paddingBottom: '0.1rem',
-    paddingLeft: '0.4rem',
-    paddingRight: '0.4rem',
+    paddingTop: {
+      default: '0.1rem',
+      '@media (max-width: 380px)': '0.06rem',
+    },
+    paddingBottom: {
+      default: '0.1rem',
+      '@media (max-width: 380px)': '0.06rem',
+    },
+    paddingLeft: {
+      default: '0.4rem',
+      '@media (max-width: 380px)': '0.28rem',
+    },
+    paddingRight: {
+      default: '0.4rem',
+      '@media (max-width: 380px)': '0.28rem',
+    },
   },
 });
 
@@ -263,7 +352,7 @@ export default function Competencies() {
                 {...stylex.props(styles.chipDot, isActive && styles.chipDotActive)}
                 aria-hidden="true"
               />
-              <span>{comp.label}</span>
+              <span {...stylex.props(styles.chipLabel)}>{comp.label}</span>
             </button>
           );
         })}

@@ -73,35 +73,98 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
   });
 
   test('verifies mobile responsive viewport fits without scroll or overlap', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
+    const mobileSizes = [
+      { width: 320, height: 568 },
+      { width: 375, height: 667 },
+      { width: 390, height: 844 },
+      { width: 414, height: 896 },
+      { width: 430, height: 932 },
+    ];
 
-    const nameHeading = page.getByRole('heading', { level: 1 });
-    await expect(nameHeading).toBeVisible();
+    for (const size of mobileSizes) {
+      await page.setViewportSize(size);
+      await page.goto('/');
 
-    const badge = page.getByText('SWE');
-    await expect(badge).toBeVisible();
+      const nameHeading = page.getByRole('heading', { level: 1 });
+      await expect(nameHeading).toBeVisible();
 
-    const contactButton = page.getByRole('button', { name: /contact/i });
-    await expect(contactButton).toBeVisible();
+      const badge = page.locator('header > div').first();
+      await expect(badge).toBeVisible();
 
-    const badgeBox = await badge.boundingBox();
-    const contactBox = await contactButton.boundingBox();
-    expect(badgeBox).not.toBeNull();
-    expect(contactBox).not.toBeNull();
-    if (badgeBox && contactBox) {
-      expect(badgeBox.x + badgeBox.width).toBeLessThan(contactBox.x);
+      const githubLink = page.getByRole('link', { name: 'GitHub' });
+      await expect(githubLink).toBeVisible();
+
+      const contactButton = page.getByRole('button', { name: /contact/i });
+      await expect(contactButton).toBeVisible();
+
+      const badgeBox = await badge.boundingBox();
+      const githubBox = await githubLink.boundingBox();
+      expect(badgeBox).not.toBeNull();
+      expect(githubBox).not.toBeNull();
+      if (badgeBox && githubBox) {
+        expect(badgeBox.x + badgeBox.width).toBeLessThanOrEqual(githubBox.x);
+      }
+
+      const fitsHeight = await page.evaluate(() => {
+        const main = document.querySelector('main');
+        const mainFits = main ? main.scrollHeight <= main.clientHeight : true;
+        return document.documentElement.scrollHeight <= window.innerHeight && mainFits;
+      });
+      expect(fitsHeight).toBe(true);
+
+      const fitsWidth = await page.evaluate(() => {
+        const main = document.querySelector('main');
+        const mainFits = main ? main.scrollWidth <= main.clientWidth : true;
+        return document.documentElement.scrollWidth <= window.innerWidth && mainFits;
+      });
+      expect(fitsWidth).toBe(true);
+
+      const tabs = page.getByRole('tab');
+      const tab0Box = await tabs.nth(0).boundingBox();
+      const tab1Box = await tabs.nth(1).boundingBox();
+      const tab2Box = await tabs.nth(2).boundingBox();
+      const tab3Box = await tabs.nth(3).boundingBox();
+      if (tab0Box && tab1Box && tab2Box && tab3Box) {
+        expect(Math.abs(tab0Box.y - tab1Box.y)).toBeLessThan(5);
+        expect(Math.abs(tab2Box.y - tab3Box.y)).toBeLessThan(5);
+        expect(tab2Box.y).toBeGreaterThan(tab0Box.y);
+      }
+
+      const count = await tabs.count();
+      for (let i = 0; i < count; i++) {
+        await tabs.nth(i).click();
+        await expect(page.getByRole('tabpanel')).toBeVisible();
+
+        const fitsHeightWithCard = await page.evaluate(() => {
+          const main = document.querySelector('main');
+          const mainFits = main ? main.scrollHeight <= main.clientHeight : true;
+          return document.documentElement.scrollHeight <= window.innerHeight && mainFits;
+        });
+        expect(fitsHeightWithCard).toBe(true);
+
+        const cardBox = await page.getByRole('tabpanel').boundingBox();
+        const footerBox = await page.locator('footer').boundingBox();
+        expect(cardBox).not.toBeNull();
+        expect(footerBox).not.toBeNull();
+        if (cardBox && footerBox) {
+          expect(cardBox.y + cardBox.height).toBeLessThanOrEqual(footerBox.y);
+        }
+      }
+
+      const locationBadge = page.locator('footer button');
+      const videoControls = page.locator('div[role="region"]');
+      const locBox = await locationBadge.boundingBox();
+      const controlsBox = await videoControls.boundingBox();
+      expect(locBox).not.toBeNull();
+      expect(controlsBox).not.toBeNull();
+      if (locBox && controlsBox) {
+        expect(locBox.x + locBox.width).toBeLessThanOrEqual(controlsBox.x);
+      }
     }
-
-    const fitsWithinMobileViewport = await page.evaluate(() => {
-      return document.documentElement.scrollHeight <= window.innerHeight;
-    });
-    expect(fitsWithinMobileViewport).toBe(true);
   });
 
   test('captures visual screenshots for desktop and mobile verification', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto('/');
     await page.waitForTimeout(500);
     await page.screenshot({ path: 'public/screenshot.png' });
 

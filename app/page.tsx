@@ -8,7 +8,7 @@ import { tokens } from './tokens.stylex';
 const styles = stylex.create({
   page: {
     position: 'relative',
-    height: '100vh',
+    height: '100dvh',
     maxHeight: '100dvh',
     width: '100vw',
     maxWidth: '100vw',
@@ -19,22 +19,26 @@ const styles = stylex.create({
     paddingTop: {
       default: '2rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.9rem',
+      '@media (max-width: 480px)': '0.8rem',
+      '@media (max-width: 360px)': '0.6rem',
     },
     paddingBottom: {
       default: '2rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.9rem',
+      '@media (max-width: 480px)': '0.8rem',
+      '@media (max-width: 360px)': '0.6rem',
     },
     paddingLeft: {
       default: '2.5rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.9rem',
+      '@media (max-width: 480px)': '0.8rem',
+      '@media (max-width: 360px)': '0.6rem',
     },
     paddingRight: {
       default: '2.5rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.9rem',
+      '@media (max-width: 480px)': '0.8rem',
+      '@media (max-width: 360px)': '0.6rem',
     },
     backgroundColor: tokens.colorBg,
     color: tokens.colorTextPrimary,
@@ -51,11 +55,29 @@ const styles = stylex.create({
   badge: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.45rem',
-    paddingTop: '0.35rem',
-    paddingBottom: '0.35rem',
-    paddingLeft: '0.75rem',
-    paddingRight: '0.45rem',
+    gap: {
+      default: '0.45rem',
+      '@media (max-width: 480px)': '0.32rem',
+      '@media (max-width: 360px)': '0.22rem',
+    },
+    paddingTop: {
+      default: '0.35rem',
+      '@media (max-width: 360px)': '0.24rem',
+    },
+    paddingBottom: {
+      default: '0.35rem',
+      '@media (max-width: 360px)': '0.24rem',
+    },
+    paddingLeft: {
+      default: '0.75rem',
+      '@media (max-width: 480px)': '0.55rem',
+      '@media (max-width: 360px)': '0.42rem',
+    },
+    paddingRight: {
+      default: '0.45rem',
+      '@media (max-width: 480px)': '0.35rem',
+      '@media (max-width: 360px)': '0.24rem',
+    },
     borderRadius: 9999,
     backgroundColor: tokens.colorGlassBg,
     backdropFilter: 'blur(16px)',
@@ -66,21 +88,31 @@ const styles = stylex.create({
     fontSize: {
       default: '0.74rem',
       '@media (max-width: 640px)': '0.66rem',
+      '@media (max-width: 360px)': '0.58rem',
     },
-    letterSpacing: '0.08em',
+    letterSpacing: {
+      default: '0.08em',
+      '@media (max-width: 360px)': '0.04em',
+    },
     textTransform: 'uppercase',
     color: tokens.colorTextSecondary,
+    whiteSpace: 'nowrap',
+    flexShrink: 0,
+    minHeight: {
+      default: 'auto',
+      '@media (max-width: 640px)': 32,
+    },
   },
   desktopRole: {
     display: {
       default: 'inline',
-      '@media (max-width: 480px)': 'none',
+      '@media (max-width: 640px)': 'none',
     },
   },
   mobileRole: {
     display: {
       default: 'none',
-      '@media (max-width: 480px)': 'inline',
+      '@media (max-width: 640px)': 'inline',
     },
   },
   badgeTag: {
@@ -88,8 +120,14 @@ const styles = stylex.create({
     alignItems: 'center',
     paddingTop: '0.12rem',
     paddingBottom: '0.12rem',
-    paddingLeft: '0.42rem',
-    paddingRight: '0.42rem',
+    paddingLeft: {
+      default: '0.42rem',
+      '@media (max-width: 360px)': '0.28rem',
+    },
+    paddingRight: {
+      default: '0.42rem',
+      '@media (max-width: 360px)': '0.28rem',
+    },
     borderRadius: 9999,
     backgroundColor: 'rgba(196, 181, 253, 0.12)',
     borderWidth: 1,
@@ -99,8 +137,12 @@ const styles = stylex.create({
     fontSize: {
       default: '0.66rem',
       '@media (max-width: 640px)': '0.6rem',
+      '@media (max-width: 360px)': '0.52rem',
     },
-    letterSpacing: '0.12em',
+    letterSpacing: {
+      default: '0.12em',
+      '@media (max-width: 360px)': '0.06em',
+    },
     fontWeight: 500,
   },
   heroCenter: {
@@ -115,17 +157,20 @@ const styles = stylex.create({
     paddingLeft: {
       default: '1rem',
       '@media (max-width: 640px)': '0.25rem',
+      '@media (max-width: 360px)': '0rem',
     },
     paddingRight: {
       default: '1rem',
       '@media (max-width: 640px)': '0.25rem',
+      '@media (max-width: 360px)': '0rem',
     },
   },
   nameHeading: {
     fontFamily: tokens.fontDisplay,
     fontSize: {
       default: 'clamp(6.2rem, 15.5vw, 14.5rem)',
-      '@media (max-width: 640px)': 'clamp(3.8rem, 15.5vw, 6rem)',
+      '@media (max-width: 640px)': 'clamp(3.1rem, 14vw, 5.2rem)',
+      '@media (max-width: 380px)': 'clamp(2.4rem, 12.5vw, 3.2rem)',
     },
     fontWeight: 600,
     letterSpacing: {
@@ -133,6 +178,7 @@ const styles = stylex.create({
       '@media (max-width: 640px)': '-0.02em',
     },
     lineHeight: 0.92,
+    whiteSpace: 'nowrap',
     backgroundImage: 'linear-gradient(180deg, #ffffff 25%, #f5f3ff 65%, #ddd6fe 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
@@ -151,6 +197,8 @@ const styles = stylex.create({
     paddingRight: {
       default: '7rem',
       '@media (max-width: 640px)': '5.5rem',
+      '@media (max-width: 480px)': '4.6rem',
+      '@media (max-width: 360px)': '4.2rem',
     },
     boxSizing: 'border-box',
   },
