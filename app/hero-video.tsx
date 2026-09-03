@@ -4,12 +4,6 @@ import * as stylex from '@stylexjs/stylex';
 import { useEffect, useRef, useState } from 'react';
 import { tokens } from './tokens.stylex';
 
-const pulse = stylex.keyframes({
-  '0%': { opacity: 0.4, transform: 'scale(0.92)' },
-  '50%': { opacity: 1, transform: 'scale(1.08)' },
-  '100%': { opacity: 0.4, transform: 'scale(0.92)' },
-});
-
 const styles = stylex.create({
   wrapper: {
     position: 'absolute',
@@ -28,7 +22,7 @@ const styles = stylex.create({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    filter: 'contrast(1.04) brightness(0.92)',
+    filter: 'contrast(1.05) brightness(0.88)',
   },
   vignette: {
     position: 'absolute',
@@ -37,7 +31,7 @@ const styles = stylex.create({
     right: 0,
     bottom: 0,
     background:
-      'radial-gradient(ellipse at center, rgba(2, 2, 4, 0.28) 0%, rgba(2, 2, 4, 0.65) 65%, rgba(2, 2, 4, 0.92) 100%)',
+      'radial-gradient(ellipse at center, rgba(2, 2, 4, 0.35) 0%, rgba(2, 2, 4, 0.65) 60%, rgba(2, 2, 4, 0.94) 100%)',
     zIndex: 1,
   },
   gradientOverlay: {
@@ -47,7 +41,7 @@ const styles = stylex.create({
     right: 0,
     bottom: 0,
     background:
-      'linear-gradient(to bottom, rgba(2, 2, 4, 0.75) 0%, transparent 20%, transparent 75%, rgba(2, 2, 4, 0.88) 100%)',
+      'linear-gradient(to bottom, rgba(2, 2, 4, 0.8) 0%, rgba(2, 2, 4, 0.2) 25%, rgba(2, 2, 4, 0.2) 75%, rgba(2, 2, 4, 0.9) 100%)',
     zIndex: 2,
   },
   controlsContainer: {
@@ -63,11 +57,11 @@ const styles = stylex.create({
     zIndex: 30,
     display: 'flex',
     alignItems: 'center',
-    gap: '0.5rem',
+    gap: '0.4rem',
     paddingTop: '0.35rem',
     paddingBottom: '0.35rem',
-    paddingLeft: '0.65rem',
-    paddingRight: '0.65rem',
+    paddingLeft: '0.55rem',
+    paddingRight: '0.55rem',
     backgroundColor: tokens.colorGlassBg,
     backdropFilter: 'blur(16px)',
     borderWidth: 1,
@@ -76,52 +70,19 @@ const styles = stylex.create({
     borderRadius: 9999,
     pointerEvents: 'auto',
   },
-  statusIndicator: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.4rem',
-    paddingRight: '0.35rem',
-    borderRightWidth: 1,
-    borderRightStyle: 'solid',
-    borderRightColor: tokens.colorBorder,
-  },
-  beaconDot: {
-    width: 6,
-    height: 6,
-    borderRadius: '50%',
-    backgroundColor: tokens.colorStatusGreen,
-    boxShadow: '0 0 8px rgba(52, 211, 153, 0.8)',
-    animationName: pulse,
-    animationDuration: '2s',
-    animationIterationCount: 'infinite',
-  },
-  beaconDotPaused: {
-    width: 6,
-    height: 6,
-    borderRadius: '50%',
-    backgroundColor: tokens.colorTextMuted,
-    boxShadow: 'none',
-  },
-  statusLabel: {
-    fontFamily: tokens.fontMono,
-    fontSize: '0.68rem',
-    letterSpacing: '0.08em',
-    color: tokens.colorTextMuted,
-    textTransform: 'uppercase',
-  },
   controlButton: {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 28,
-    height: 28,
+    width: 30,
+    height: 30,
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: 0,
     paddingRight: 0,
     backgroundColor: {
       default: 'transparent',
-      ':hover': 'rgba(255, 255, 255, 0.1)',
+      ':hover': 'rgba(255, 255, 255, 0.12)',
     },
     borderWidth: 0,
     borderRadius: '50%',
@@ -137,15 +98,37 @@ const styles = stylex.create({
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    video.play().catch(() => {
-      setIsPlaying(false);
-    });
+    video.muted = false;
+    video
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+        setIsMuted(false);
+      })
+      .catch(() => {
+        video.muted = true;
+        setIsMuted(true);
+        video
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+
+        const enableAudioOnInteraction = () => {
+          if (video.muted) {
+            video.muted = false;
+            setIsMuted(false);
+          }
+        };
+
+        window.addEventListener('pointerdown', enableAudioOnInteraction, { once: true });
+        window.addEventListener('keydown', enableAudioOnInteraction, { once: true });
+      });
   }, []);
 
   const togglePlayback = () => {
@@ -180,9 +163,10 @@ export default function HeroVideo() {
           src="/heila_compressed.mp4"
           autoPlay
           loop
-          muted
           playsInline
           preload="auto"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
           {...stylex.props(styles.video)}
         />
         <div {...stylex.props(styles.vignette)} />
@@ -190,11 +174,6 @@ export default function HeroVideo() {
       </div>
 
       <div {...stylex.props(styles.controlsContainer)} role="region" aria-label="Video Controls">
-        <div {...stylex.props(styles.statusIndicator)}>
-          <div {...stylex.props(isPlaying ? styles.beaconDot : styles.beaconDotPaused)} />
-          <span {...stylex.props(styles.statusLabel)}>{isPlaying ? 'Live Stream' : 'Paused'}</span>
-        </div>
-
         <button
           type="button"
           onClick={togglePlayback}
@@ -203,12 +182,12 @@ export default function HeroVideo() {
           title={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
               <rect x="5" y="4" width="4" height="16" rx="1" />
               <rect x="15" y="4" width="4" height="16" rx="1" />
             </svg>
           ) : (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
               <polygon points="6 4 20 12 6 20 6 4" />
             </svg>
           )}
@@ -223,8 +202,8 @@ export default function HeroVideo() {
         >
           {isMuted ? (
             <svg
-              width="13"
-              height="13"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -238,8 +217,8 @@ export default function HeroVideo() {
             </svg>
           ) : (
             <svg
-              width="13"
-              height="13"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

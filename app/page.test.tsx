@@ -9,28 +9,18 @@ describe('Home Page', () => {
     expect(heading).toHaveTextContent('Heila Shahidi');
   });
 
-  it('renders the role subheading', () => {
+  it('does not render secondary body text below the name', () => {
     render(<Home />);
-    const subheading = screen.getByRole('heading', { level: 2 });
-    expect(subheading).toHaveTextContent('AI Software Engineer');
+    expect(screen.queryByRole('heading', { level: 2 })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Architecting frontier foundation models/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('Foundation Models')).not.toBeInTheDocument();
   });
 
-  it('renders the technical focus statement', () => {
+  it('renders location and footer content', () => {
     render(<Home />);
-    expect(screen.getByText(/Architecting frontier foundation models/i)).toBeInTheDocument();
-  });
-
-  it('renders core competency domain chips', () => {
-    render(<Home />);
-    expect(screen.getByText('Foundation Models')).toBeInTheDocument();
-    expect(screen.getByText('Agentic Cognition')).toBeInTheDocument();
-    expect(screen.getByText('Distributed Inference')).toBeInTheDocument();
-    expect(screen.getByText('Triton & CUDA Systems')).toBeInTheDocument();
-  });
-
-  it('renders infrastructure and telemetry badges', () => {
-    render(<Home />);
-    expect(screen.getByText(/SAN FRANCISCO, CA · 37\.7749° N, 122\.4194° W/i)).toBeInTheDocument();
-    expect(screen.getByText(/ENGINEERING COGNITION FROM FIRST PRINCIPLES/i)).toBeInTheDocument();
+    expect(screen.getByText('Austin, TX, USA')).toBeInTheDocument();
+    expect(screen.getByText('Software Engineer')).toBeInTheDocument();
+    expect(screen.getByText('AI')).toBeInTheDocument();
+    expect(screen.getByText('Engineering Intelligent Software & Systems')).toBeInTheDocument();
   });
 });

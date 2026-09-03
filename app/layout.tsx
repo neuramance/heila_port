@@ -1,23 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Cinzel, Cormorant_Garamond, Geist, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Italiana } from 'next/font/google';
 import './globals.css';
 
-const cinzel = Cinzel({
+const italiana = Italiana({
   variable: '--font-display',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: '--font-serif',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-});
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  weight: '400',
 });
 
 const geistMono = Geist_Mono({
@@ -59,10 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${cinzel.variable} ${cormorant.variable} ${geistSans.variable} ${geistMono.variable}`}
-    >
+    <html lang="en" className={`${italiana.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );

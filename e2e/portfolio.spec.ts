@@ -9,23 +9,14 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
     await expect(page).toHaveTitle(/Heila Shahidi \| AI Software Engineer/);
   });
 
-  test('displays monumental hero name and technical role', async ({ page }) => {
+  test('displays monumental hero name and verifies absence of subtext', async ({ page }) => {
     const nameHeading = page.getByRole('heading', { level: 1 });
     await expect(nameHeading).toBeVisible();
     await expect(nameHeading).toHaveText('Heila Shahidi');
 
     const roleHeading = page.getByRole('heading', { level: 2 });
-    await expect(roleHeading).toBeVisible();
-    await expect(roleHeading).toHaveText('AI Software Engineer');
-  });
-
-  test('displays technical thesis and competency chips', async ({ page }) => {
-    await expect(page.getByText(/Architecting frontier foundation models/i)).toBeVisible();
-
-    await expect(page.getByText('Foundation Models', { exact: true })).toBeVisible();
-    await expect(page.getByText('Agentic Cognition', { exact: true })).toBeVisible();
-    await expect(page.getByText('Distributed Inference', { exact: true })).toBeVisible();
-    await expect(page.getByText('Triton & CUDA Systems', { exact: true })).toBeVisible();
+    await expect(roleHeading).toHaveCount(0);
+    await expect(page.getByText(/Architecting frontier foundation models/i)).toHaveCount(0);
   });
 
   test('embeds background video with looping and muted attributes', async ({ page }) => {
@@ -44,6 +35,11 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
       return htmlStyle.overflow === 'hidden' && bodyStyle.overflow === 'hidden';
     });
     expect(isOverflowHidden).toBe(true);
+
+    const fitsWithinViewport = await page.evaluate(() => {
+      return document.documentElement.scrollHeight <= window.innerHeight;
+    });
+    expect(fitsWithinViewport).toBe(true);
   });
 
   test('interacts with background video controls', async ({ page }) => {
@@ -53,28 +49,13 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
     await expect(pauseButton).toBeVisible();
     await pauseButton.click();
 
-    await expect(page.getByText('Paused')).toBeVisible();
-
     const playButton = page.getByRole('button', {
       name: /play background video/i,
     });
     await expect(playButton).toBeVisible();
     await playButton.click();
 
-    await expect(page.getByText('Live Stream')).toBeVisible();
-  });
-
-  test('opens and closes technical expertise modal', async ({ page }) => {
-    const expertiseButton = page.getByRole('button', { name: /expertise/i });
-    await expertiseButton.click();
-
-    const dialog = page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
-    await expect(page.getByText('Core AI Disciplines')).toBeVisible();
-    await expect(page.getByText(/Neural Architecture & Pretraining/i)).toBeVisible();
-
-    await page.keyboard.press('Escape');
-    await expect(dialog).not.toBeVisible();
+    await expect(page.getByRole('button', { name: /pause background video/i })).toBeVisible();
   });
 
   test('copies email on contact button click', async ({ page, context }) => {
@@ -84,5 +65,44 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
     await contactButton.click();
 
     await expect(page.getByText(/Email copied: heila\.shahidi@gmail\.com/i)).toBeVisible();
+  });
+
+  test('verifies mobile responsive viewport fits without scroll or overlap', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const nameHeading = page.getByRole('heading', { level: 1 });
+    await expect(nameHeading).toBeVisible();
+
+    const badge = page.getByText('SWE');
+    await expect(badge).toBeVisible();
+
+    const contactButton = page.getByRole('button', { name: /contact/i });
+    await expect(contactButton).toBeVisible();
+
+    const badgeBox = await badge.boundingBox();
+    const contactBox = await contactButton.boundingBox();
+    expect(badgeBox).not.toBeNull();
+    expect(contactBox).not.toBeNull();
+    if (badgeBox && contactBox) {
+      expect(badgeBox.x + badgeBox.width).toBeLessThan(contactBox.x);
+    }
+
+    const fitsWithinMobileViewport = await page.evaluate(() => {
+      return document.documentElement.scrollHeight <= window.innerHeight;
+    });
+    expect(fitsWithinMobileViewport).toBe(true);
+  });
+
+  test('captures visual screenshots for desktop and mobile verification', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: 'public/screenshot.png' });
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: 'public/screenshot-mobile.png' });
   });
 });

@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import ContactActions from './contact-actions';
 import HeroVideo from './hero-video';
+import LocationBadge from './location-badge';
 import { tokens } from './tokens.stylex';
 
 const styles = stylex.create({
@@ -17,22 +18,22 @@ const styles = stylex.create({
     paddingTop: {
       default: '2rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '1rem',
+      '@media (max-width: 480px)': '0.9rem',
     },
     paddingBottom: {
       default: '2rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '1rem',
+      '@media (max-width: 480px)': '0.9rem',
     },
     paddingLeft: {
       default: '2.5rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.85rem',
+      '@media (max-width: 480px)': '0.9rem',
     },
     paddingRight: {
       default: '2.5rem',
       '@media (max-width: 768px)': '1.25rem',
-      '@media (max-width: 480px)': '0.85rem',
+      '@media (max-width: 480px)': '0.9rem',
     },
     backgroundColor: tokens.colorBg,
     color: tokens.colorTextPrimary,
@@ -49,46 +50,57 @@ const styles = stylex.create({
   badge: {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.55rem',
-    paddingTop: '0.4rem',
-    paddingBottom: '0.4rem',
-    paddingLeft: '0.85rem',
-    paddingRight: '0.85rem',
+    gap: '0.45rem',
+    paddingTop: '0.35rem',
+    paddingBottom: '0.35rem',
+    paddingLeft: '0.75rem',
+    paddingRight: '0.45rem',
     borderRadius: 9999,
     backgroundColor: tokens.colorGlassBg,
     backdropFilter: 'blur(16px)',
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: tokens.colorBorder,
+    fontFamily: tokens.fontMono,
+    fontSize: {
+      default: '0.74rem',
+      '@media (max-width: 640px)': '0.66rem',
+    },
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    color: tokens.colorTextSecondary,
   },
-  beaconDot: {
-    width: 7,
-    height: 7,
-    borderRadius: '50%',
-    backgroundColor: tokens.colorStatusGreen,
-    boxShadow: '0 0 10px rgba(52, 211, 153, 0.9)',
-  },
-  badgeTextDesktop: {
+  desktopRole: {
     display: {
       default: 'inline',
-      '@media (max-width: 640px)': 'none',
+      '@media (max-width: 480px)': 'none',
     },
-    fontFamily: tokens.fontMono,
-    fontSize: '0.74rem',
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: tokens.colorTextSecondary,
   },
-  badgeTextMobile: {
+  mobileRole: {
     display: {
       default: 'none',
-      '@media (max-width: 640px)': 'inline',
+      '@media (max-width: 480px)': 'inline',
     },
-    fontFamily: tokens.fontMono,
-    fontSize: '0.66rem',
-    letterSpacing: '0.1em',
-    textTransform: 'uppercase',
-    color: tokens.colorTextSecondary,
+  },
+  badgeTag: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    paddingTop: '0.12rem',
+    paddingBottom: '0.12rem',
+    paddingLeft: '0.42rem',
+    paddingRight: '0.42rem',
+    borderRadius: 9999,
+    backgroundColor: 'rgba(196, 181, 253, 0.12)',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'rgba(196, 181, 253, 0.3)',
+    color: tokens.colorAccent,
+    fontSize: {
+      default: '0.66rem',
+      '@media (max-width: 640px)': '0.6rem',
+    },
+    letterSpacing: '0.12em',
+    fontWeight: 500,
   },
   heroCenter: {
     position: 'relative',
@@ -101,132 +113,30 @@ const styles = stylex.create({
     flexGrow: 1,
     paddingLeft: {
       default: '1rem',
-      '@media (max-width: 640px)': 0,
+      '@media (max-width: 640px)': '0.25rem',
     },
     paddingRight: {
       default: '1rem',
-      '@media (max-width: 640px)': 0,
+      '@media (max-width: 640px)': '0.25rem',
     },
-  },
-  eyebrow: {
-    fontFamily: tokens.fontMono,
-    fontSize: {
-      default: '0.8rem',
-      '@media (max-width: 640px)': '0.68rem',
-    },
-    letterSpacing: '0.22em',
-    textTransform: 'uppercase',
-    color: tokens.colorAccent,
-    marginBottom: {
-      default: '1.25rem',
-      '@media (max-width: 640px)': '0.75rem',
-    },
-    paddingTop: '0.35rem',
-    paddingBottom: '0.35rem',
-    paddingLeft: '0.95rem',
-    paddingRight: '0.95rem',
-    borderRadius: 9999,
-    backgroundColor: 'rgba(196, 181, 253, 0.08)',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'rgba(196, 181, 253, 0.25)',
-    backdropFilter: 'blur(12px)',
   },
   nameHeading: {
     fontFamily: tokens.fontDisplay,
     fontSize: {
-      default: 'clamp(3.4rem, 8.8vw, 8.5rem)',
-      '@media (max-width: 640px)': 'clamp(2.3rem, 10.5vw, 3.5rem)',
+      default: 'clamp(5.2rem, 13.5vw, 12.5rem)',
+      '@media (max-width: 640px)': 'clamp(3.4rem, 14vw, 5.4rem)',
     },
-    fontWeight: 700,
+    fontWeight: 400,
     letterSpacing: {
-      default: '0.07em',
-      '@media (max-width: 640px)': '0.04em',
+      default: '-0.04em',
+      '@media (max-width: 640px)': '-0.025em',
     },
-    lineHeight: 1.02,
-    textTransform: 'uppercase',
+    lineHeight: 0.94,
     color: tokens.colorTextPrimary,
     margin: 0,
-    textShadow: '0 0 45px rgba(255, 255, 255, 0.24), 0 0 90px rgba(196, 181, 253, 0.18)',
-  },
-  roleSubheading: {
-    fontFamily: tokens.fontSans,
-    fontSize: {
-      default: 'clamp(1rem, 2vw, 1.35rem)',
-      '@media (max-width: 640px)': '0.85rem',
-    },
-    fontWeight: 500,
-    letterSpacing: {
-      default: '0.24em',
-      '@media (max-width: 640px)': '0.18em',
-    },
-    textTransform: 'uppercase',
-    color: tokens.colorTextSecondary,
-    marginTop: {
-      default: '1.2rem',
-      '@media (max-width: 640px)': '0.7rem',
-    },
-    marginBottom: {
-      default: '1.35rem',
-      '@media (max-width: 640px)': '0.75rem',
-    },
-  },
-  statement: {
-    fontFamily: tokens.fontSans,
-    fontSize: {
-      default: 'clamp(0.95rem, 1.4vw, 1.15rem)',
-      '@media (max-width: 640px)': '0.82rem',
-    },
-    lineHeight: 1.55,
-    color: tokens.colorTextSecondary,
-    maxWidth: 660,
-    margin: 0,
-    marginBottom: {
-      default: '2rem',
-      '@media (max-width: 640px)': '1rem',
-    },
-  },
-  chipContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: {
-      default: '0.65rem',
-      '@media (max-width: 640px)': '0.35rem',
-    },
-  },
-  chip: {
-    fontFamily: tokens.fontMono,
-    fontSize: {
-      default: '0.72rem',
-      '@media (max-width: 640px)': '0.6rem',
-    },
-    letterSpacing: '0.12em',
-    textTransform: 'uppercase',
-    color: tokens.colorTextSecondary,
-    paddingTop: {
-      default: '0.4rem',
-      '@media (max-width: 640px)': '0.28rem',
-    },
-    paddingBottom: {
-      default: '0.4rem',
-      '@media (max-width: 640px)': '0.28rem',
-    },
-    paddingLeft: {
-      default: '0.85rem',
-      '@media (max-width: 640px)': '0.55rem',
-    },
-    paddingRight: {
-      default: '0.85rem',
-      '@media (max-width: 640px)': '0.55rem',
-    },
-    borderRadius: 6,
-    backgroundColor: tokens.colorGlassBg,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: tokens.colorBorder,
-    backdropFilter: 'blur(12px)',
+    userSelect: 'none',
+    textShadow:
+      '0 2px 32px rgba(0, 0, 0, 0.98), 0 0 80px rgba(196, 181, 253, 0.4), 0 0 140px rgba(167, 139, 250, 0.25)',
   },
   footer: {
     position: 'relative',
@@ -236,39 +146,20 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingRight: {
-      default: '12rem',
-      '@media (max-width: 768px)': '7.5rem',
-      '@media (max-width: 640px)': '0',
+      default: '7rem',
+      '@media (max-width: 640px)': '5.5rem',
     },
     boxSizing: 'border-box',
   },
-  footerMeta: {
-    display: {
-      default: 'flex',
-      '@media (max-width: 640px)': 'none',
-    },
-    flexDirection: 'column',
-    gap: '0.2rem',
-  },
-  footerMono: {
-    fontFamily: tokens.fontMono,
-    fontSize: {
-      default: '0.7rem',
-      '@media (max-width: 640px)': '0.6rem',
-    },
-    letterSpacing: '0.1em',
-    color: tokens.colorTextMuted,
-    textTransform: 'uppercase',
-  },
   footerCenter: {
     fontFamily: tokens.fontMono,
-    fontSize: '0.68rem',
-    letterSpacing: '0.14em',
+    fontSize: '0.7rem',
+    letterSpacing: '0.12em',
     color: tokens.colorTextMuted,
     textTransform: 'uppercase',
     display: {
       default: 'block',
-      '@media (max-width: 900px)': 'none',
+      '@media (max-width: 768px)': 'none',
     },
   },
 });
@@ -280,45 +171,23 @@ export default function Home() {
 
       <header {...stylex.props(styles.header)}>
         <div {...stylex.props(styles.badge)}>
-          <div {...stylex.props(styles.beaconDot)} />
-          <span {...stylex.props(styles.badgeTextDesktop)}>AI Systems Architecture</span>
-          <span {...stylex.props(styles.badgeTextMobile)}>AI Architecture</span>
+          <span {...stylex.props(styles.desktopRole)}>Software Engineer</span>
+          <span {...stylex.props(styles.mobileRole)}>SWE</span>
+          <span {...stylex.props(styles.badgeTag)}>AI</span>
         </div>
 
         <ContactActions />
       </header>
 
       <section {...stylex.props(styles.heroCenter)}>
-        <div {...stylex.props(styles.eyebrow)}>Neural Architecture & Autonomous Intelligence</div>
-
         <h1 {...stylex.props(styles.nameHeading)}>Heila Shahidi</h1>
-
-        <h2 {...stylex.props(styles.roleSubheading)}>AI Software Engineer</h2>
-
-        <p {...stylex.props(styles.statement)}>
-          Architecting frontier foundation models, distributed neural inference engines, and
-          autonomous reasoning agents with mathematical rigor and aesthetic precision.
-        </p>
-
-        <div {...stylex.props(styles.chipContainer)}>
-          <span {...stylex.props(styles.chip)}>Foundation Models</span>
-          <span {...stylex.props(styles.chip)}>Agentic Cognition</span>
-          <span {...stylex.props(styles.chip)}>Distributed Inference</span>
-          <span {...stylex.props(styles.chip)}>Triton & CUDA Systems</span>
-        </div>
       </section>
 
       <footer {...stylex.props(styles.footer)}>
-        <div {...stylex.props(styles.footerMeta)}>
-          <span {...stylex.props(styles.footerMono)}>
-            SAN FRANCISCO, CA · 37.7749° N, 122.4194° W
-          </span>
-          <span {...stylex.props(styles.footerMono)}>INFRASTRUCTURE: DISTRIBUTED GPU CLUSTERS</span>
-        </div>
-
-        <div {...stylex.props(styles.footerCenter)}>
-          ENGINEERING COGNITION FROM FIRST PRINCIPLES
-        </div>
+        <LocationBadge />
+        <span {...stylex.props(styles.footerCenter)}>
+          Engineering Intelligent Software & Systems
+        </span>
       </footer>
     </main>
   );

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import HeroVideo from './hero-video';
 
@@ -16,30 +16,40 @@ describe('HeroVideo Component', () => {
 
   it('toggles video playback when play/pause button is clicked', async () => {
     render(<HeroVideo />);
-    const toggleButton = screen.getByRole('button', {
+    const pauseButton = screen.getByRole('button', {
       name: /pause background video/i,
     });
 
-    fireEvent.click(toggleButton);
-    expect(screen.getByText('Paused')).toBeInTheDocument();
+    fireEvent.click(pauseButton);
+    expect(screen.getByRole('button', { name: /play background video/i })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /play background video/i }));
-    expect(await screen.findByText('Live Stream')).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: /pause background video/i }),
+    ).toBeInTheDocument();
   });
 
-  it('toggles video audio when mute button is clicked', () => {
-    const { container } = render(<HeroVideo />);
-    const video = container.querySelector('video');
+  it('toggles video audio when mute button is clicked', async () => {
+    let renderedContainer: HTMLElement;
+    await act(async () => {
+      const res = render(<HeroVideo />);
+      renderedContainer = res.container;
+    });
+    const video = renderedContainer!.querySelector('video');
     const muteButton = screen.getByRole('button', {
-      name: /unmute video audio/i,
+      name: /mute video audio/i,
     });
 
-    expect(video?.muted).toBe(true);
-
-    fireEvent.click(muteButton);
     expect(video?.muted).toBe(false);
 
-    fireEvent.click(screen.getByRole('button', { name: /mute video audio/i }));
+    act(() => {
+      fireEvent.click(muteButton);
+    });
     expect(video?.muted).toBe(true);
+
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /unmute video audio/i }));
+    });
+    expect(video?.muted).toBe(false);
   });
 });
