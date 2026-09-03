@@ -2,17 +2,25 @@
 
 A cinematic, modern single-page hero portfolio for software engineer **Heila Shahidi**.
 
-Live at **[heilas.co](https://heilas.co)**.
+Live at **[heilas.co](https://heilas.co)** (also accessible at **[www.heilas.co](https://www.heilas.co)**).
 
 ![Heila Shahidi Portfolio](public/screenshot.png)
 
 ## Overview
 
-- **Typography**: Monumental display typography set in Playfair Display with tight kerning, semi-bold weight, and luminous sheen.
-- **Cinematics**: Looping background video with default audio playback, frosted glass controls, and gesture-resilient policy fallbacks.
-- **Micro-Delights**: Interactive Austin location badge featuring live Central Time via `useSyncExternalStore` and coordinate toggle.
-- **Design System**: Meta StyleX for zero-runtime, type-safe atomic CSS.
-- **Verification**: Deterministic test suite with Vitest unit tests and Playwright cross-viewport end-to-end verification.
+- **Typography**: Monumental display serif in Playfair Display (semi-bold 600) with atmospheric drop-shadow and moonlit gradient sheen.
+- **Cinematics**: Continuous unpausable looping background video with default audio playback and frosted-glass audio toggle.
+- **Interactive Competencies**: Responsive chip deck featuring autonomous AI voice agents, real-time distributed systems, full-stack architecture, and graduate studies at UT Austin.
+- **Micro-Delights**: Real-time Austin Central Time badge subscribing via React 19's `useSyncExternalStore` with coordinate toggle.
+- **Design System**: Meta StyleX for zero-runtime, type-safe atomic CSS with strict viewport bounds.
+- **Verification**: 100% deterministic test suite with Vitest unit tests and Playwright multi-viewport end-to-end coverage (320px–1440px).
+
+## Connect
+
+- **Live**: [https://heilas.co](https://heilas.co)
+- **GitHub**: [https://github.com/heilashahidi](https://github.com/heilashahidi)
+- **LinkedIn**: [https://www.linkedin.com/in/heilashahidi/](https://www.linkedin.com/in/heilashahidi/)
+- **X**: [https://x.com/h3ilaa](https://x.com/h3ilaa)
 
 ## Stack
 
@@ -20,6 +28,7 @@ Live at **[heilas.co](https://heilas.co)**.
 - **Styling**: Meta StyleX (`@stylexjs/stylex`)
 - **Runtime**: Bun
 - **Testing**: Vitest, React Testing Library, Playwright
+- **Deployment**: Vercel Edge Network
 
 ## Development
 
