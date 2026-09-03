@@ -2,11 +2,13 @@
 
 A cinematic, modern single-page hero portfolio for software engineer **Heila Shahidi**.
 
+Live at **[heilas.co](https://heilas.co)**.
+
 ![Heila Shahidi Portfolio](public/screenshot.png)
 
 ## Overview
 
-- **Typography**: Monumental display typography set in Italiana with tight kerning and atmospheric luminance.
+- **Typography**: Monumental display typography set in Playfair Display with tight kerning, semi-bold weight, and luminous sheen.
 - **Cinematics**: Looping background video with default audio playback, frosted glass controls, and gesture-resilient policy fallbacks.
 - **Micro-Delights**: Interactive Austin location badge featuring live Central Time via `useSyncExternalStore` and coordinate toggle.
 - **Design System**: Meta StyleX for zero-runtime, type-safe atomic CSS.
