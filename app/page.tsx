@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import Competencies from './competencies';
 import ContactActions from './contact-actions';
 import HeroVideo from './hero-video';
 import LocationBadge from './location-badge';
@@ -181,6 +182,7 @@ export default function Home() {
 
       <section {...stylex.props(styles.heroCenter)}>
         <h1 {...stylex.props(styles.nameHeading)}>Heila Shahidi</h1>
+        <Competencies />
       </section>
 
       <footer {...stylex.props(styles.footer)}>

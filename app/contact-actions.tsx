@@ -143,6 +143,15 @@ export default function ContactActions() {
         </a>
 
         <a
+          href="https://www.linkedin.com/in/heilashahidi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          {...stylex.props(styles.navLink)}
+        >
+          LinkedIn
+        </a>
+
+        <a
           href="https://x.com/h3ilaa"
           target="_blank"
           rel="noopener noreferrer"

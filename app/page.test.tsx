@@ -9,11 +9,11 @@ describe('Home Page', () => {
     expect(heading).toHaveTextContent('Heila Shahidi');
   });
 
-  it('does not render secondary body text below the name', () => {
+  it('renders technical competencies below the name', () => {
     render(<Home />);
-    expect(screen.queryByRole('heading', { level: 2 })).not.toBeInTheDocument();
-    expect(screen.queryByText(/Architecting frontier foundation models/i)).not.toBeInTheDocument();
-    expect(screen.queryByText('Foundation Models')).not.toBeInTheDocument();
+    expect(screen.getByText(/autonomous AI voice agents/i)).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /Autonomous AI Agents/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /UT Austin • MS SE/i })).toBeInTheDocument();
   });
 
   it('renders location and footer content', () => {

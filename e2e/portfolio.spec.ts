@@ -9,14 +9,19 @@ test.describe('Heila Shahidi Portfolio Landing Page', () => {
     await expect(page).toHaveTitle(/Heila Shahidi \| AI Software Engineer/);
   });
 
-  test('displays monumental hero name and verifies absence of subtext', async ({ page }) => {
+  test('displays monumental hero name and technical competencies', async ({ page }) => {
     const nameHeading = page.getByRole('heading', { level: 1 });
     await expect(nameHeading).toBeVisible();
     await expect(nameHeading).toHaveText('Heila Shahidi');
 
-    const roleHeading = page.getByRole('heading', { level: 2 });
-    await expect(roleHeading).toHaveCount(0);
-    await expect(page.getByText(/Architecting frontier foundation models/i)).toHaveCount(0);
+    await expect(page.getByText(/autonomous AI voice agents/i)).toBeVisible();
+    await expect(page.getByRole('tab', { name: /Autonomous AI Agents/i })).toBeVisible();
+    await expect(page.getByRole('tab', { name: /UT Austin • MS SE/i })).toBeVisible();
+
+    const agentsTab = page.getByRole('tab', { name: /Autonomous AI Agents/i });
+    await agentsTab.click();
+    await expect(page.getByRole('tabpanel')).toBeVisible();
+    await expect(page.getByText('LangChain')).toBeVisible();
   });
 
   test('embeds background video with looping and muted attributes', async ({ page }) => {

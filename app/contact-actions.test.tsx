@@ -15,6 +15,8 @@ describe('ContactActions Component', () => {
     render(<ContactActions />);
     const githubLink = screen.getByRole('link', { name: /github/i });
     expect(githubLink).toHaveAttribute('href', 'https://github.com/heilashahidi');
+    const linkedinLink = screen.getByRole('link', { name: /linkedin/i });
+    expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/in/heilashahidi/');
     const xLink = screen.getByRole('link', { name: /^x$/i });
     expect(xLink).toHaveAttribute('href', 'https://x.com/h3ilaa');
     expect(screen.getByRole('button', { name: /contact/i })).toBeInTheDocument();
