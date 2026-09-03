@@ -11,7 +11,7 @@ export const tokens = stylex.defineVars({
   colorBorderHover: 'rgba(255, 255, 255, 0.32)',
   colorGlassBg: 'rgba(8, 8, 14, 0.52)',
   colorGlassBgHover: 'rgba(20, 20, 32, 0.76)',
-  fontDisplay: 'var(--font-display), "Italiana", "Cormorant Garamond", Georgia, serif',
+  fontDisplay: 'var(--font-display), "Playfair Display", "Italiana", Georgia, serif',
   fontSans: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   fontMono: 'var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace',
 });

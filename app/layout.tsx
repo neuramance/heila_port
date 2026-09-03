@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist_Mono, Italiana } from 'next/font/google';
+import { Geist_Mono, Playfair_Display } from 'next/font/google';
 import './globals.css';
 
-const italiana = Italiana({
+const playfair = Playfair_Display({
   variable: '--font-display',
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '600', '700'],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
@@ -47,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${italiana.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );

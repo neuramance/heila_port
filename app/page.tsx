@@ -124,20 +124,22 @@ const styles = stylex.create({
   nameHeading: {
     fontFamily: tokens.fontDisplay,
     fontSize: {
-      default: 'clamp(5.2rem, 13.5vw, 12.5rem)',
-      '@media (max-width: 640px)': 'clamp(3.4rem, 14vw, 5.4rem)',
+      default: 'clamp(6.2rem, 15.5vw, 14.5rem)',
+      '@media (max-width: 640px)': 'clamp(3.8rem, 15.5vw, 6rem)',
     },
-    fontWeight: 400,
+    fontWeight: 600,
     letterSpacing: {
-      default: '-0.04em',
-      '@media (max-width: 640px)': '-0.025em',
+      default: '-0.035em',
+      '@media (max-width: 640px)': '-0.02em',
     },
-    lineHeight: 0.94,
-    color: tokens.colorTextPrimary,
+    lineHeight: 0.92,
+    backgroundImage: 'linear-gradient(180deg, #ffffff 25%, #f5f3ff 65%, #ddd6fe 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    filter:
+      'drop-shadow(0 4px 32px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 65px rgba(196, 181, 253, 0.45))',
     margin: 0,
     userSelect: 'none',
-    textShadow:
-      '0 2px 32px rgba(0, 0, 0, 0.98), 0 0 80px rgba(196, 181, 253, 0.4), 0 0 140px rgba(167, 139, 250, 0.25)',
   },
   footer: {
     position: 'relative',
