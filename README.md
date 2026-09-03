@@ -2,7 +2,7 @@
 
 A cinematic, modern single-page hero portfolio for software engineer **Heila Shahidi**.
 
-Live at **[heilas.co](https://heilas.co)** (also accessible at **[www.heilas.co](https://www.heilas.co)**).
+Live at **[heilas.co](https://heilas.co)** and **[heilas.tech](https://heilas.tech)**.
 
 ![Heila Shahidi Portfolio](public/screenshot.png)
 
@@ -17,7 +17,7 @@ Live at **[heilas.co](https://heilas.co)** (also accessible at **[www.heilas.co]
 
 ## Connect
 
-- **Live**: [https://heilas.co](https://heilas.co)
+- **Live**: [https://heilas.co](https://heilas.co) • [https://heilas.tech](https://heilas.tech)
 - **GitHub**: [https://github.com/heilashahidi](https://github.com/heilashahidi)
 - **LinkedIn**: [https://www.linkedin.com/in/heilashahidi/](https://www.linkedin.com/in/heilashahidi/)
 - **X**: [https://x.com/h3ilaa](https://x.com/h3ilaa)
